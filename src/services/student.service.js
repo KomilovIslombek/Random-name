@@ -1,36 +1,38 @@
-import axios from 'axios'
+import { storageService } from './storage.service'
 
-class StudentService {
-	#URL = 'http://localhost:3000/students'
-
-	async getStudents() {
-		const { data } = await axios.get(this.#URL)
-		return data
+export class StudentService {
+	constructor({ students, setStudents }) {
+		this.students = students
+		this.setStudents = setStudents
 	}
 
-	async sendStudent(name = '', { focusing }) {
-		const { data } = await axios.post(this.#URL, { name, focusing })
-		return data
+	removeStudent(id) {
+		const data = this.students.filter(student => student.id !== id)
+		storageService.setItem('students', data)
+		this.setStudents(storageService.getItem('students'))
 	}
 
-	async removeStudent(id) {
-		const { data } = await axios.delete(`${this.#URL}/${id}`)
-		return data
+	updateStudent(id, newName, visited = false) {
+		const updatedStudents = this.students.map(student => {
+			if (student.id === id) {
+				return { ...student, name: newName, visited, focusing: false }
+			}
+			return student
+		})
+
+		storageService.setItem('students', updatedStudents)
+		this.setStudents(storageService.getItem('students'))
 	}
 
-	async updateStudent(id, name, visited = false) {
-		if (!id && !name) return undefined
+	resetStudents() {
+		const updatedStudents = this.students.map(student => ({
+			...student,
+			visited: false
+		}))
 
-		try {
-			const { data } = await axios.put(`${this.#URL}/${id}`, {
-				name,
-				visited
-			})
-			return data
-		} catch (error) {
-			throw new Error(`${error} f: updateStudent`)
-		}
+		storageService.setItem('students', updatedStudents)
+		this.setStudents(storageService.getItem('students'))
 	}
 }
 
-export const studentService = new StudentService()
+// export const studentService = new StudentService()

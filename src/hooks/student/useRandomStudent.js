@@ -1,14 +1,17 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
-import { studentService } from '../../services/student.service'
+import { useContext, useState } from 'react'
+import { StudentsContext } from '../../context/StudentsContext'
+import { StudentService } from '../../services/student.service'
 
 const useRandomStudent = () => {
-	const [randomStudent, setRandomStudent] = useState(null)
-	const queryClient = useQueryClient()
+	const { students, setStudents } = useContext(StudentsContext)
+	const studentService = new StudentService({ students, setStudents })
 
-	const pickRandomStudent = async () => {
-		const data = await studentService.getStudents()
-		const nonVisitedStudents = data.filter(student => !student.visited)
+	const [randomStudent, setRandomStudent] = useState(null)
+
+	const pickRandomStudent = () => {
+		const nonVisitedStudents = students.filter(
+			student => !student.visited && student.name
+		)
 
 		if (nonVisitedStudents.length === 0) {
 			setRandomStudent({ name: 'All the students were on their way out!' })
@@ -19,22 +22,13 @@ const useRandomStudent = () => {
 		const selectedStudent = nonVisitedStudents[randomIndex]
 		setRandomStudent(selectedStudent)
 
-		await studentService.updateStudent(
-			selectedStudent.id,
-			selectedStudent.name,
-			true
-		)
+		studentService.updateStudent(selectedStudent.id, selectedStudent.name, true)
 
-		// Обновляем данные запроса вручную
-		queryClient.setQueryData('student list', data)
+		window.scrollTo({ top: 0, behavior: 'smooth' })
 	}
 
-	const resetVisitStudents = async () => {
-		const data = await studentService.getStudents()
-
-		data.forEach(async student => {
-			await studentService.updateStudent(student.id, student.name, false)
-		})
+	const resetVisitStudents = () => {
+		studentService.resetStudents()
 
 		setRandomStudent({ name: '' })
 	}

@@ -1,10 +1,13 @@
+import { useContext } from 'react'
+import { StudentsContext } from '../../context/StudentsContext'
 import { useStudent } from '../../hooks/student/useStudent'
 import styles from './StudentList.module.scss'
 import StudentRow from './StudentRow'
 
-const StudentTable = ({ students }) => {
+const StudentTable = () => {
+	const { students } = useContext(StudentsContext)
+
 	const {
-		setId,
 		refArea,
 		removeStudent,
 		handleKeyDown,
@@ -25,9 +28,9 @@ const StudentTable = ({ students }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{students.map(student => (
+				{students.map((student, ind) => (
 					<StudentRow
-						key={student.id}
+						key={ind}
 						student={student}
 						actions={{
 							removeStudent,

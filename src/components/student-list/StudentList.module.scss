@@ -1,11 +1,12 @@
 @import 'src/assets/styles/animations';
 @import 'src/assets/styles/variables';
 
-// @media (max-width: 540px) {
-// 	.students {
-// 		order: 2;
-// 	}
-// }
+@media (max-width: 540px) {
+	.students {
+		order: 2;
+		padding-bottom: 4rem;
+	}
+}
 
 .table_container {
 	width: 100%;

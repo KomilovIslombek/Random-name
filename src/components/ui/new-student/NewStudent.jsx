@@ -1,30 +1,21 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useContext } from 'react'
 import { IoPersonAdd } from 'react-icons/io5'
-import { studentService } from '../../../services/student.service'
+import { StudentsContext } from '../../../context/StudentsContext'
+import { storageService } from '../../../services/storage.service'
 import styles from './NewStudent.module.scss'
 
 const NewStudent = () => {
-	const { data } = useQuery({
-		queryKey: ['student list'],
-		queryFn: () => studentService.getStudents()
-	})
-
-	const queryClient = useQueryClient()
-
-	// Send Student query
-	const { mutate, isPending } = useMutation({
-		mutationKey: ['send student'],
-		mutationFn: () => studentService.sendStudent('', { focusing: true }),
-		onSuccess() {
-			queryClient.refetchQueries({ queryKey: ['student list'] })
-		},
-		onError(error) {
-			console.error('error', error)
-		}
-	})
+	const { students, setStudents } = useContext(StudentsContext)
 
 	const newStudent = () => {
-		mutate()
+		students.push({
+			id: students.length + 1,
+			name: '',
+			focusing: true
+		})
+
+		storageService.setItem('students', students)
+		setStudents(storageService.getItem('students'))
 	}
 
 	return (
