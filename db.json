@@ -1,0 +1,19 @@
+{
+  "students": [
+    {
+      "name": "Islombek komilov",
+      "visited": false,
+      "id": "1"
+    },
+    {
+      "name": "Admin1",
+      "visited": true,
+      "id": "f511"
+    },
+    {
+      "id": "81b9",
+      "name": "",
+      "focusing": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+.bottomMenu {
+	position: fixed;
+	padding-right: 2rem;
+	padding-bottom: 2rem;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	justify-content: flex-end;
+	gap: 5px;
+}

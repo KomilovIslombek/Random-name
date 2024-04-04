@@ -1,0 +1,55 @@
+@import 'src/assets/styles/variables';
+
+.wrapper {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+
+	@media (max-width: 1100px) {
+		grid-template-columns: 1fr 0.6fr;
+	}
+	@media (max-width: 540px) {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+	svg {
+		font-size: 1.3rem;
+		color: $purple;
+	}
+
+	h1 {
+		font-size: 3em;
+		font-weight: 300;
+		line-height: 1em;
+		text-align: center;
+		color: #8fdbff;
+	}
+
+	h2 {
+		font-size: 1em;
+		font-weight: 300;
+		text-align: center;
+		display: block;
+		line-height: 1em;
+		padding-bottom: 2em;
+		color: #fb667a;
+	}
+
+	h2 a {
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #fb667a;
+		text-decoration: none;
+	}
+
+	.blue {
+		color: #185875;
+	}
+	.yellow {
+		color: #fff842;
+	}
+}
+
+.selectedStudent {
+	font-size: 2em;
+	font-weight: 600;
+}

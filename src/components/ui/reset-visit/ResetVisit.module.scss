@@ -1,0 +1,47 @@
+@import 'src/assets/styles/variables';
+
+.ResetVisit {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	width: fit-content;
+	padding: 0.7rem 1rem;
+	background-color: #1a1a1a;
+	// background-color: rgba($color: $lfs-grey, $alpha: 0.8);
+	border-radius: 6px;
+
+	box-sizing: border-box;
+	overflow: hidden;
+	transition:
+		width,
+		border 0.3s ease;
+	border: 1px solid transparent;
+
+	& > span {
+		width: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		transition: max-width 0.5s ease;
+		width: fit-content;
+		max-width: 0;
+		margin-right: 2px;
+	}
+
+	&:hover {
+		> span {
+			max-width: 1275px;
+			transition: max-width 0.5s ease;
+		}
+		width: auto;
+
+		border-color: #646cff;
+		// &::before {
+		// 	content: 'Add new student...';
+		// }
+	}
+
+	svg {
+		font-size: 0.9rem;
+	}
+}
